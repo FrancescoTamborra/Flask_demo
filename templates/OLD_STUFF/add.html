@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block main %}
+<p>Some content on the add page </p>
+<form action="{{ url_for('add') }}" method="post"> <!-- we defined the method on this route but we still need to inform it in routes -->
+    {{ form.csrf_token }} <!-- it's a good practice to require a token against malicious attacks. see in the app the key -->
+    {{ form.title.label }}
+    {{ form.title }}
+    {{ form.submit }}
+</form>
+
+<!-- we show the submitted value -->
+{% if title %}
+    <h1> {{ title }}</h1>
+{% endif %}
+
+{% endblock %}

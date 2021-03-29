@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>My webapp </title>
+  </head>
+  <body>
+      <h1>Task manager</h1>
+      {% block main %}
+      {% endblock main %} <!-- the main in the endblock is optional -->
+      <hr>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Tasks</a></li>
+            <li><a href="{{ url_for('add') }}">Add new</a></li>
+        </ul>
+  </body>
+</html>
