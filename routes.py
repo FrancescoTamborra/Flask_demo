@@ -11,4 +11,7 @@ def index():
 @app.route('/about', methods=['GET', 'POST']) # by default it accept GET requests. We have to specify the POST
 def about():
     form = forms.AddTaskForm() # instance of our form class
+    if form.validate_on_submit(): # when post is a success we do stuff
+        print('Submitted_title', form.title.data) # print in terminal (logs)
+        return render_template('about.html', form=form, title=form.title.data) # we pass it to the render via title variable (see about.html)
     return render_template('about.html', current_title='Custom Title', form=form) # in the render we call it form
