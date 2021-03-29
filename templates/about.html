@@ -2,4 +2,10 @@
 
 {% block main %}
 <p>Some content on the about page </p>
+<form action="/about" method="post"> <!-- we defined the method on this route but we still need to inform it in routes -->
+    {{ form.csrf_token }} <!-- it's a good practice to require a token against malicious attacks. see in the app the key -->
+    {{ form.title.label }}
+    {{ form.title }}
+    {{ form.submit }}
+</form>
 {% endblock %}
