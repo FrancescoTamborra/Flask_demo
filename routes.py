@@ -1,17 +1,22 @@
-from app import app
-from flask import render_template
+from app import app, db
+from flask import render_template, redirect, url_for
+from datetime import datetime
 
-import forms # we nned to import our form
+import models
+import forms
 
 @app.route('/') # we use a decorator for the next function applied to the route /
 @app.route('/index') # we can apply the same function index to multiple routes
 def index():
-    return render_template('index.html', current_title='Custom Title') # Flask has Jinja tamplate engine which allows to render much more than plain html (dynamic)
+    tasks = models.Task.query.all() # we query all tasks in the database and we give them to index
+    return render_template('index.html', tasks=tasks)
 
-@app.route('/about', methods=['GET', 'POST']) # by default it accept GET requests. We have to specify the POST
-def about():
+@app.route('/add', methods=['GET', 'POST']) # by default it accept GET requests. We have to specify the POST
+def add():
     form = forms.AddTaskForm() # instance of our form class
     if form.validate_on_submit(): # when post is a success we do stuff
-        print('Submitted_title', form.title.data) # print in terminal (logs)
-        return render_template('about.html', form=form, title=form.title.data) # we pass it to the render via title variable (see about.html)
-    return render_template('about.html', current_title='Custom Title', form=form) # in the render we call it form
+        t = models.Task(title=form.title.data, date=datetime.utcnow())
+        db.session.add(t)
+        db.session.commit()
+        return redirect(url_for('index')) # if success we redirect on index where all tasks are shown
+    return render_template('add.html', form=form) # in the render we call it form

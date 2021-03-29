@@ -1,3 +1,4 @@
+from datetime import datetime
 from app import db
 
 class Task(db.Model): # we create our Task model which inherits from db instance model
