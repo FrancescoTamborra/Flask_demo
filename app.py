@@ -10,6 +10,11 @@ app = Flask(__name__) # we run it as main, see below
 def index():
     return render_template('index.html', current_title='Custom Title') # Flask has Jinja tamplate engine which allows to render much more than plain html (dynamic)
 
+@app.route('/about')
+def about():
+    return render_template('about.html', current_title='Custom Title')
+
+
 if __name__ == '__main__':
     app.run(debug=True) # always use degug in order to have useful info from Flask
     # notice that when you save the app is updated and restarted; don't need to ctrl+c and run it again
